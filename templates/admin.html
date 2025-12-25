@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3 mb-3 border-dark">
+                <h6 class="fw-bold"><i class="bi bi-person-badge"></i> Add New Teacher</h6>
+                <form action="/add_teacher" method="POST">
+                    <input type="text" name="username" class="form-control mb-2" placeholder="Teacher Name" required>
+                    <input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
+                    <input type="password" name="password" class="form-control mb-2" placeholder="Password" required>
+                    <button class="btn btn-dark w-100 btn-sm">Register Teacher</button>
+                </form>
+            </div>
+
+            <div class="card shadow-sm p-3 mb-3 border-secondary">
+                <h6 class="fw-bold"><i class="bi bi-book"></i> Add New Course</h6>
+                <form action="/add_course" method="POST">
+                    <input type="text" name="course_id" class="form-control mb-2" placeholder="ID (e.g., CS101)" required>
+                    <input type="text" name="course_name" class="form-control mb-2" placeholder="Course Name" required>
+                    <button class="btn btn-secondary w-100 btn-sm">Create Course</button>
+                </form>
+            </div>
+
+            <div class="card shadow-sm p-3 mb-3 border-info">
+                <h6 class="fw-bold"><i class="bi bi-link"></i> Assign Teacher to Course</h6>
+                <form action="/assign_teacher" method="POST">
+                    <select name="teacher_id" class="form-select mb-2 btn-sm" required>
+                        <option value="">Select Teacher</option>
+                        {% for t in teacher_list %}<option value="{{ t.id }}">{{ t.name }}</option>{% endfor %}
+                    </select>
+                    <select name="course_id" class="form-select mb-2 btn-sm" required>
+                        <option value="">Select Course</option>
+                        {% for c in course_list %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}
+                    </select>
+                    <button class="btn btn-info w-100 btn-sm text-white">Link Teacher</button>
+                </form>
+            </div>
+            
+            <a href="/alert_system" class="btn btn-danger w-100 shadow-sm mb-4">
+                <i class="bi bi-exclamation-triangle"></i> Check 80% Attendance Threshold
+            </a>
+        </div>
+
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3 mb-4 border-primary">
+                        <h6 class="fw-bold text-primary">Register New Student</h6>
+                        <form action="/register_student" method="POST">
+                            <input type="text" name="id" class="form-control mb-2" placeholder="ID" required>
+                            <input type="text" name="username" class="form-control mb-2" placeholder="Name" required>
+                            <input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
+                            <input type="password" name="password" class="form-control mb-2" placeholder="Password" required>
+                            <button class="btn btn-primary w-100 btn-sm">Add Student</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3 mb-4 border-success">
+                        <h6 class="fw-bold text-success">Assign Student to Course</h6>
+                        <form action="/assign_student" method="POST">
+                            <select name="student_id" class="form-select mb-2" required>
+                                <option value="">Select Student</option>
+                                {% for s in student_list %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+                            </select>
+                            <select name="course_id" class="form-select mb-2" required>
+                                <option value="">Select Course</option>
+                                {% for c in course_list %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}
+                            </select>
+                            <button class="btn btn-success w-100 btn-sm">Assign & Capture</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <h5>Recent System Activity</h5>
+            <table class="table table-sm table-hover bg-white shadow-sm border">
+                <thead class="table-light"><tr><th>Student ID</th><th>Course</th><th>Date</th></tr></thead>
+                <tbody>
+                    {% for a in attendance %}
+                    <tr><td>{{ a.student_id }}</td><td>{{ a.course_id }}</td><td>{{ a.date }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

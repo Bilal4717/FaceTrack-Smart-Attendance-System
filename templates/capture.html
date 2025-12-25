@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h3><i class="bi bi-camera"></i> Face Registration Phase</h3>
+                </div>
+                <div class="card-body p-5 text-center">
+                    <h4 class="mb-4">Student ID identified: <span class="text-primary">{{ student_id }}</span></h4>
+                    
+                    <div class="alert alert-warning border-start border-4">
+                        <ul class="text-start mb-0">
+                            <li>Ensure the student is in a <strong>well-lit</strong> area.</li>
+                            <li>The camera will take <strong>50 photos</strong> automatically.</li>
+                            <li>Ask the student to turn their head slightly during the process.</li>
+                        </ul>
+                    </div>
+
+                    <div class="py-4">
+                        <a href="/capture_face/{{ student_id }}" class="btn btn-success btn-lg px-5 shadow">
+                            Start Camera Capture
+                        </a>
+                    </div>
+                    
+                    <p class="text-muted small">Note: The system will automatically train the model after capture.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

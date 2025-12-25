@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Attendance History: {{ course_id }}</h2>
+    <a href="/teacher_dash" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Student ID</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.student_id }}</td>
+                    <td>{{ record.date }}</td>
+                    <td>
+                        {% if record.status == 1 %}
+                        <span class="badge bg-success">Present</span>
+                        {% else %}
+                        <span class="badge bg-danger">Absent</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ record.timestamp }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No attendance records found for this course.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}s

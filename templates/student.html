@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4 text-primary">My Attendance Progress</h2>
+    <div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white shadow">
+            <div class="card-body">
+                <h6>Overall Average</h6>
+                <h2 class="display-6 fw-bold">{{ avg_attendance }}%</h2>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="accordion" id="attendanceAccordion">
+        {% for s in courses %}
+        <div class="accordion-item mb-3 shadow-sm border-0">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}">
+                    <div class="w-100 me-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span><i class="bi bi-book me-2"></i><strong>{{ s.name }}</strong></span>
+                            <span class="text-{{ s.color }} fw-bold">{{ s.perc }}%</span>
+                        </div>
+                        <div class="progress" style="height: 12px; border-radius: 10px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-{{ s.color }}" 
+                                 style="width: {{ s.perc }}%"></div>
+                        </div>
+                    </div>
+                </button>
+            </h2>
+            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#attendanceAccordion">
+                <div class="accordion-body bg-light">
+                    <h6 class="text-muted border-bottom pb-2">Session-by-Session History</h6>
+                    <table class="table table-hover mt-3 bg-white rounded shadow-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Date of Class</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in s.history %}
+                            <tr>
+                                <td>{{ record.date }}</td>
+                                <td class="text-center">
+                                    <span class="badge rounded-pill bg-{{ 'success' if record.status == 'Present' else 'danger' }} px-3">
+                                        {{ record.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-folder-x display-1 text-muted"></i>
+            <p class="mt-3 text-muted">You are not enrolled in any courses or no sessions have been held yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

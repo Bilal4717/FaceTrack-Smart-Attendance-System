@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Attendance Warning System</h2>
+<p class="text-muted">The following students are currently below the <strong>80% attendance threshold</strong>.</p>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead class="table-danger">
+                <tr>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Attendance</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in at_risk %}
+                <tr>
+                    <td>{{ s.name }} ({{ s.sid }})</td>
+                    <td>{{ s.course }}</td>
+                    <td class="fw-bold text-danger">{{ s.percent }}%</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger">Send Warning Email</button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-success">All students are above the 80% threshold!</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Teacher Dashboard</h2>
+<div class="row">
+    {% for c in courses %}
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>{{c.name}}</h5>
+                <p class="text-muted">{{c.id}}</p>
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('start_session', course_id=c.id) }}" class="btn btn-success">Start Class Session</a>
+                    <a href="{{ url_for('course_analytics', course_id=c.id) }}" class="btn btn-info">View Analytics</a>
+                    <a href="{{ url_for('attendance_log', course_id=c.id) }}" class="btn btn-outline-primary">History Logs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

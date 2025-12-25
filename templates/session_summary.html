@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Session Summary: {{ course_id }}</h4>
+            <span>{{ date }}</span>
+        </div>
+        <div class="card-body">
+            <h5>Students Marked Present:</h5>
+            <ul class="list-group list-group-flush mb-4">
+                {% for name in students %}
+                <li class="list-group-item">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i> {{ name }}
+                </li>
+                {% else %}
+                <li class="list-group-item text-muted">No students were marked during this session.</li>
+                {% endfor %}
+            </ul>
+            
+            <div class="alert alert-info border-0 shadow-sm">
+                <i class="bi bi-cloud-check"></i> All records have been synchronized with the cloud database.
+            </div>
+            
+            <a href="/teacher_dash" class="btn btn-primary px-4">Return to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
